@@ -18,14 +18,17 @@
     <counter></counter>
     <counter></counter>
     <hr>
-    <post title="標題" text="內文內文內文"></post>
-    <post v-for="post in posts" :title="post.title" :text="post.text"></post>
+    總共按了 {{ goods }} 個讚
+    <br>
+    <post title="標題" text="內文內文內文" @good="onPostGood"></post>
+    <post v-for="post in posts" :title="post.title" :text="post.text" @good="onPostGood"></post>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script type="text/x-template" id="template-post">
     <div class="post">
       <h1>{{ title }}</h1>
       <p>{{ text }}</p>
+      <input type="button" :value="good ? '收回讚' : '讚'" @click="clickGood">
     </div>
   </script>
   <script>
@@ -43,7 +46,20 @@
       props: {
         title: String,
         text: String
-      }
+      },
+      data () {
+        return {
+          good: false
+        }
+      },
+      methods: {
+        clickGood () {
+          this.good = !this.good
+          // 子元件觸發一個叫做 good 的自訂事件
+          // 並把目前按讚的狀態傳出
+          this.$emit('good', this.good)
+        }
+      },
     })
 
     new Vue({
@@ -54,7 +70,14 @@
             {title: 'abc', text: '123123123'},
             {title: 'def', text: '456456456'},
             {title: 'ghi', text: '789789789'}
-          ]
+          ],
+          goods: 0
+        }
+      },
+      methods: {
+        onPostGood (data) {
+          if (data) this.goods++
+          else this.goods--
         }
       }
     })
