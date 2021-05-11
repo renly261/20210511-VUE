@@ -46,6 +46,32 @@
     <!-- 綁定 class 時要寫成 {}，key 是 class 名，value 是 true/false -->
     <p :class="{red: true, border: hasBorder}">文字</p>
     <p :class="textClass">文字</p>
+
+    <input type="text" v-model="input.text"> {{ input.text }}
+    <br>
+    <input type="checkbox" v-model="input.check" value="1"> 1
+    <input type="checkbox" v-model="input.check" value="2"> 2
+    <input type="checkbox" v-model="input.check" value="3"> 3
+    {{ input.check }}
+    <br>
+    <input type="checkbox" v-model="input.check2" v-for="(fruit, index) in fruits" :value="fruit">
+    {{ input.check2 }}
+    <br>
+    <input type="radio" v-model="input.radio" value="購買">
+    <input type="radio" v-model="input.radio" value="不購買">
+    {{ input.radio }}
+    <br>
+    <select v-model="input.select">
+      <option>1</option>
+      <option>2</option>
+    </select>
+    {{ input.select }}
+    <br>
+    <select v-model="input.select2">
+      <option v-for="(fruit, index) in fruits" :value="index">{{ fruit }}</option>
+    </select>
+    {{ input.select2 }}
+    <br>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
@@ -70,6 +96,14 @@
           textClass: {
             red: true,
             border: false
+          },
+          input: {
+            text: '',
+            check: [],
+            check2: [],
+            radio: '購買',
+            select: '',
+            select2: ''
           }
         }
       }
