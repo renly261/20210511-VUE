@@ -15,6 +15,7 @@
         <input type="checkbox" v-model="item.done">
         <del v-if="item.done">{{ item.name }}</del>
         <span v-else>{{ item.name }}</span>
+        <input type="button" value="x" @click="del(index)">
       </li>
     </ul>
   </div>
@@ -34,6 +35,9 @@
             this.items.push({ name: this.newitem, done: false})
             this.newitem = ''
           }
+        },
+        del (index) {
+          this.items.splice(index, 1)
         }
       },
     })
