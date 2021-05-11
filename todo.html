@@ -11,7 +11,11 @@
     <input type="text" v-model="newitem" @keydown.enter="add">
     <input type="button" value="新增" @click="add">
     <ul>
-      <li v-for="(item, index) in items">{{ item }}</li>
+      <li v-for="(item, index) in items">
+        <input type="checkbox" v-model="item.done">
+        <del v-if="item.done">{{ item.name }}</del>
+        <span v-else>{{ item.name }}</span>
+      </li>
     </ul>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
