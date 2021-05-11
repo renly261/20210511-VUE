@@ -8,6 +8,7 @@
 </head>
 <body>
   <div id="app">
+    <h1 ref="title" id="title">清單</h1>
     <input type="text" v-model="newitem" @keydown.enter="add" :style="{border: inputBorder}">
     <input type="button" value="新增" @click="add">
     <ul>
@@ -71,6 +72,14 @@
         if (data) {
           this.items = JSON.parse(data)
         }
+
+        console.log(this.$refs.title.innerText)
+        // $el 只能用 querySelector 和 querySelectorAll
+        console.log(this.$el.querySelectorAll('#title')[0].innerText)
+      },
+      created () {
+        // 錯誤，因為 created 時東西還沒放到 DOM
+        // console.log(this.$refs.title.innerText)
       }
     })
   </script>
