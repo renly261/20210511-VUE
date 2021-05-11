@@ -12,6 +12,29 @@
       <i>你好</i>
       <del>123</del>
     </mybtn>
+    <product>
+      <template v-slot:name>
+        太師傅雞腿便當
+      </template>
+      <template v-slot:price>
+        $80
+      </template>
+      <template v-slot:description>
+        很好吃
+      </template>
+    </product>
+    <hr>
+    <product v-for="product in products">
+      <template v-slot:name>
+        {{ product.name }}
+      </template>
+      <template v-slot:price>
+        {{ product.price }}
+      </template>
+      <template v-slot:description>
+        {{ product.description }}
+      </template>
+    </product>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script type="text/x-template" id="template-mybtn">
@@ -19,12 +42,36 @@
       <slot></slot>
     </button>
   </script>
+  <script type="text/x-template" id="template-product">
+    <div>
+      <h1>
+        <slot name="name"></slot>
+      </h1>
+      <h2>
+        <slot name="price"></slot>
+      </h2>
+      <p>
+        <slot name="description"></slot>
+      </p>
+    </div>
+  </script>
   <script>
     Vue.component('mybtn', {
       template: '#template-mybtn'
     })
+    Vue.component('product', {
+      template: '#template-product'
+    })
     new Vue({
-      el: '#app'
+      el: '#app',
+      data () {
+        return {
+          products: [
+            {name: '排骨', price: 60, description: '就是排骨'},
+            {name: '雞排', price: 80, description: '很大的雞排'}
+          ]
+        }
+      }
     })
   </script>
 </body>
