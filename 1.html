@@ -30,6 +30,10 @@
     <a v-bind:href="url">{{ url }}</a>
     <a :href="url">{{ url }}</a>
     <img :src="img" width="100">
+
+    <!-- 綁定 style 時要寫成 {}，key 是 CSS 樣式，value 是 data -->
+    <p :style="{color: colorText, background: colorBG}">文字</p>
+    <p :style="textStyle">文字</p>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
@@ -43,7 +47,13 @@
           myNumber: 1,
           fruits: ['香蕉', '鳳梨', '蘋果', '芭樂'],
           url: 'https://fb.com',
-          img: 'https://dinbendon.kento520.tw/assets/img/background.jpg'
+          img: 'https://dinbendon.kento520.tw/assets/img/background.jpg',
+          colorText: 'white',
+          colorBG: 'black',
+          textStyle: {
+            color: 'red',
+            background: 'black'
+          }
         }
       }
     })
