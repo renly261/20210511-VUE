@@ -14,6 +14,13 @@
     <h1>{{ myHTMLText }}</h1>
     <h1 v-text="myHTMLText"></h1>
     <h1 v-html="myHTMLText"></h1>
+
+    <!-- v-if 不符合條件時不見 -->
+    <h1 v-if="myNumber === 1">數字是 1</h1>
+    <h1 v-else-if="myNumber === 2">數字是 2</h1>
+    <h1 v-else>數字是其他</h1>
+    <!-- v-show 不符合條件時 display none -->
+    <h1 v-show="myNumber === 1">數字是 1</h1>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
@@ -23,7 +30,8 @@
       data () {
         return {
           myText: 'Hi',
-          myHTMLText: '<a href="https://fb.com">FB</a>'
+          myHTMLText: '<a href="https://fb.com">FB</a>',
+          myNumber: 1
         }
       }
     })
