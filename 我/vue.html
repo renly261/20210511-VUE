@@ -26,44 +26,52 @@
     <!-- VUE只在 <div id="app"> </div> 這裡面作用-->
     <div id="app">
         <!-- 顯示資料--------------------------------------------------------------- -->
-        <!-- {{ }} 裡面放下面 data 資料可以顯示文字  -->
+        <!-- {{ }} 裡面放下面 data 資料可以顯示資料的文字  -->
         <h1>{{ myText }}</h1>
+
+        <!--  v-text 顯示文字 -->
         <h1 v-text="myText"></h1>
 
         <h1>{{ myHTMLText }}</h1>
         <h1 v-text="myHTMLText"></h1>
+
+        <!-- v-html 放 html 可以顯示 html -->
         <h1 v-html="myHTMLText"></h1>
 
         <!-- 判斷式----------------------------------------------------------------- -->
         <!-- 符合標籤內判斷式的才會顯示在網頁上 -->
-        <!-- 不符合條件時 整個消失 v-if 較常用-->
+        <!-- v-if 不符合條件時 整個消失 較常用-->
         <h1 v-if="myNumber==1">數字是1</h1>
         <h1 v-else-if="myNumber==2">數字是2</h1>
         <h1 v-else>數字是其他</h1>
-        <!-- 不符合條件時 display:none -->
+
+        <!-- v-show 不符合條件時 display:none -->
         <h1 v-show="myNumber==1">數字是1</h1>
 
         <!-- 迴圈-------------------------------------------------------------------- -->
         <ul>
             <!-- 對標籤跑迴圈, v-for="(值, 索引) in 陣列" -->
-            <!-- 陣列裡有幾個東西就跑幾個 li, v-for 放在哪個標籤 會依照有幾個東西顯示幾個該標籤-->
+            <!-- 陣列裡有幾個東西就跑幾個 li, v-for 放在哪個標籤 會依照陣列裡有幾個東西顯示幾個該標籤-->
             <li v-for="(fruit, index) in fruits">{{ fruit }}</li>
         </ul>
 
         <!-- 綁定---------------------------------------------------------------------- -->
         <!-- 把底下的資料綁定在上面顯示的 html 上面 -->
         <a v-bind:href="url">{{url}}</a>
+
         <!-- 簡寫 :屬性 -->
         <a :href="url">{{url}}</a>
         <img :src="img" width="100">
 
         <!-- 綁定 style 時要寫成 {}，key 是 CSS 樣式，value 是 data -->
         <p :style="{color: colorText, background: colorBG}">文字1</p>
+
         <!-- 也可以直接在下面資料寫好 {} 在上面標籤 :style 綁定 -->
         <p :style="textStyle">文字2</p>
 
         <!-- 綁定 class 時要寫成 {}，key 是 class 名，value 是 true/false -->
         <p :class="{red: true, border: hasBorder}">文字3</p>
+
         <!-- 一樣可以在下面資料寫好 {} 在上面標籤 :class 綁定 -->
         <p :class="textClass">文字4</p>
 
@@ -72,6 +80,7 @@
         <!-- 打什麼字就會跟著出現 因為是綁再一起 -->
         <input type="text" v-model="input.text"> {{ input.text }}
         <br>
+
         <!--
       .number 可將欄位資料型態轉為數字
       .trim 可以自動執行 .trim()
