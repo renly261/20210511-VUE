@@ -5,6 +5,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .red {
+      color: red
+    }
+    .border {
+      border: 1px solid black
+    }
+  </style>
 </head>
 <body>
   <div id="app">
@@ -34,6 +42,10 @@
     <!-- 綁定 style 時要寫成 {}，key 是 CSS 樣式，value 是 data -->
     <p :style="{color: colorText, background: colorBG}">文字</p>
     <p :style="textStyle">文字</p>
+
+    <!-- 綁定 class 時要寫成 {}，key 是 class 名，value 是 true/false -->
+    <p :class="{red: true, border: hasBorder}">文字</p>
+    <p :class="textClass">文字</p>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
@@ -53,6 +65,11 @@
           textStyle: {
             color: 'red',
             background: 'black'
+          },
+          hasBorder: true,
+          textClass: {
+            red: true,
+            border: false
           }
         }
       }
