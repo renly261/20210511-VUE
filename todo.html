@@ -52,6 +52,25 @@
           }
           return '5px solid ' + color
         }
+      },
+      watch: {
+        // watch 預設只偵測陣列長度改變
+        // 如果要偵測內容變化必須設定 deep: true
+        // items (newValue, oldValue) {
+        //   localStorage.setItem('vue-todo', JSON.stringify(newValue))
+        // }
+        items: {
+          handler (newValue, oldValue) {
+            localStorage.setItem('vue-todo', JSON.stringify(newValue))
+          },
+          deep: true
+        }
+      },
+      mounted () {
+        const data = localStorage.getItem('vue-todo')
+        if (data) {
+          this.items = JSON.parse(data)
+        }
       }
     })
   </script>
