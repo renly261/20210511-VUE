@@ -8,13 +8,24 @@
 </head>
 <body>
   <div id="app">
+    <h1>{{ myText }}</h1>
+    <h1 v-text="myText"></h1>
 
+    <h1>{{ myHTMLText }}</h1>
+    <h1 v-text="myHTMLText"></h1>
+    <h1 v-html="myHTMLText"></h1>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
     new Vue({
       // 將 vue 對應到 #app 
-      el: '#app'
+      el: '#app',
+      data () {
+        return {
+          myText: 'Hi',
+          myHTMLText: '<a href="https://fb.com">FB</a>'
+        }
+      }
     })
   </script>
 </body>
