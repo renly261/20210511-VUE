@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .post {
+            display: inline-block;
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <div id="app">
+        <!-- 直接用元件名稱當標籤 -->
+        <counter></counter>
+        <counter></counter>
+        <counter></counter>
+        <hr>
+        總共按了 {{ goods }} 個讚
+        <br>
+        <!-- 第3步------------------------------------------------------------------------------------ -->
+        <post title="標題" text="內文內文內文" @good="onPostGood"></post>
+        <post v-for="post in posts" :title="post.title" :text="post.text" @good="onPostGood"></post>
+        <hr>
+        {{ text }}
+        <editor :data="text" @save="text = $event"></editor>
+        <hr>
+        {{ text2 }}
+        <!-- 同步資料要加 .sync -->
+        <editor2 :data.sync="text2"></editor2>
+    </div>
+
+    <!-- 不想要上面 html 太多的話可以在用一個 script 包住處理完在呼叫  -->
+    <script type="text/x-template" id="template-post">
+        <!-- 元件裡面只能有一個元素 所以外面用 div 包起來-->
+    <div class="post">
+        <h1>{{ title }}</h1>
+        <p>{{ text }}</p>
+        <!-- 計算按讚數第1步------------------------------------------------------------------------------------ -->
+        <input type="button" :value="good ? '收回讚' : '讚'" @click="clickGood">
+    </div>
+    </script>
+
+    <script type="text/x-template" id="template-editor">
+        <div class="editor">
+          <input type="text" v-model="textToEdit">
+          <input type="button" value="存檔" @click="save">
+        </div>
+      </script>
+
+    <script type="text/x-template" id="template-editor2">
+        <div class="editor">
+          <input type="text" v-model="textToEdit">
+        </div>
+      </script>
+
+    <script>
+        // 元件 (元件名稱, 資料)
+        Vue.component('counter', {
+            template: '<button @click="number++">{{ number }}</button>',
+            data() {
+                return {
+                    number: 0
+                }
+            }
+        })
+
+        Vue.component('post', {
+            template: '#template-post',
+            // 傳進去的東西是唯讀 不能改
+            props: {
+                // 傳進去資料的種類
+                title: String,
+                text: String
+            },
+            data() {
+                return {
+                    good: false
+                }
+            },
+            methods: {
+                // 第2步---------------------------------------------------------------------------------
+                clickGood() {
+                    this.good = !this.good
+                    // 子元件觸發一個叫做 good 的自訂事件
+                    // 並把目前按讚的狀態傳出
+                    // emit 只能傳一個東西 要傳多個要用 {} 包起來
+                    this.$emit('good', this.good)
+                }
+            },
+        })
+
+        Vue.component('editor', {
+            template: '#template-editor',
+            props: {
+                data: String
+            },
+            data() {
+                return {
+                    textToEdit: ''
+                }
+            },
+            mounted() {
+                this.textToEdit = this.data
+            },
+            methods: {
+                save() {
+                    this.$emit('save', this.textToEdit)
+                }
+            },
+        })
+
+        Vue.component('editor2', {
+            template: '#template-editor2',
+            props: {
+                data: String
+            },
+            computed: {
+                textToEdit: {
+                    get() {
+                        return this.data
+                    },
+                    set(value) {
+                        // 觸發的事件名稱必須是 update:props資料名
+                        this.$emit('update:data', value)
+                    }
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    posts: [
+                        { title: 'abc', text: '123123123' },
+                        { title: 'def', text: '456456456' },
+                        { title: 'ghi', text: '789789789' }
+                    ],
+                    goods: 0,
+                    text: 'abc'
+                }
+            },
+            methods: {
+                // 第4步------------------------------------------------------------------------------------
+                onPostGood(data) {
+                    if (data) this.goods++
+                    else this.goods--
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

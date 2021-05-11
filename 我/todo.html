@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <div id="app">
+        <h1 ref="title" id="title">清單</h1>
+        <input type="text" v-model="newitem" @keydown.enter="add" :style="{border: inputBorder}">
+        <input type="button" value="新增" @click="add">
+        <ul>
+            <li v-for="(item, index) in items">
+                <!-- 選取後值是 item.done -->
+                <input type="checkbox" v-model="item.done">
+                <!-- 有選取給刪除線, 放在 <del> 裡的東西有刪除線 -->
+                <del v-if="item.done">{{ item.name }}</del>
+                <!-- 沒有的話正常顯示 -->
+                <span v-else>{{ item.name }}</span>
+                <!-- 點擊 x 刪除資料 -->
+                <input type="button" value="x" @click="del(index)">
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    items: [],
+                    newitem: ''
+                }
+            },
+
+            // VUE 要執行的 function
+            methods: {
+                add() {
+                    if (this.newitem.length >= 2) {
+                        // 裡面一定要用 this
+                        // 若輸入的字 >=2 個字 push this 進 newitem
+                        this.items.push({ name: this.newitem, done: false })
+                        // push 後清空舊的資料 方便 push 新的資料
+                        this.newitem = ''
+                    }
+                },
+                del(index) {
+                    this.items.splice(index, 1)
+                }
+            },
+
+            // 可以直接拿來用的 data
+            // 計算後產生的新的值
+            computed: {
+                // inputBorder 同時是 function 也是 變數的名稱
+                // 根據使用者輸入的字數改變框線顏色
+                inputBorder() {
+                    let color = ''
+                    if (this.newitem.length === 0) {
+                        color = 'black'
+                    } else if (this.newitem.length < 2) {
+                        color = 'red'
+                    } else if (this.newitem.length >= 2) {
+                        color = 'green'
+                    }
+                    return '5px solid ' + color
+                }
+            },
+
+            // watch 監聽 fuction 名稱為你要監聽的東西名稱
+            watch: {
+                // items(newValue, oldValue) {
+                //     localStorage.setItem('vue-todo', JSON.stringify(newValue))
+                // }
+
+                // watch 預設只偵測陣列長度改變 如果要偵測內容變化必須設定 deep: true
+                items: {
+                    handler(newValue, oldValue) {
+                        localStorage.setItem('vue-todo', JSON.stringify(newValue))
+                    },
+                    deep: true
+                }
+            },
+
+            // 讀取
+            mounted() {
+                const data = localStorage.getItem('vue-todo')
+                if (data) {
+                    this.items = JSON.parse(data)
+                }
+                // 抓 ref 要放在 mounted 裡面
+                console.log(this.$refs.title.innerText)
+                // $el 不能用 getElementById 只能用 querySelector 和 querySelectorAll
+                console.log(this.$el.querySelectorAll('#title')[0].innerText)
+            },
+            created() {
+                // 錯誤 因為 created 時東西還沒放到 DOM
+                // console.log(this.$refs.title.innerText)
+            }
+        })
+    </script>
+</body>
+
+</html>

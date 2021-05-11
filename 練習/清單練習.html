@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <div id="app">
+        <!-- 使用者輸入欄位 -->
+        <!-- 綁定使用者輸入的值為 newitem -->
+        <input type="text" v-model="newitem">
+        <!-- 新增按鈕 -->
+        <!-- 給一個點擊事件 function -->
+        <input type="button" value="新增" @click="add">
+
+        <ul>
+            <!-- 清單 -->
+            <!-- 用迴圈跑陣列裡的資料 迴圈裡有幾筆資料就有幾個 li -->
+            <li v-for="(item, index) in items">
+                <!-- 選取後值是 item.done -->
+                <input type="checkbox" v-model="item.done">
+                <!-- 有選取給刪除線, 放在 <del> 裡的東西有刪除線 -->
+                <del v-if="item.done">{{ item.name }}</del>
+                <!-- 沒有的話正常顯示 -->
+                <span v-else>{{ item.name }}</span>
+                <input type="button" value="各別刪除" @click="del(index)">
+                <input type="button" value="全部刪除" @click="delAll(index)">
+
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    items: [],
+                    newitem: ''
+                }
+            },
+            methods: {
+                add() {
+                    if (this.newitem.length >= 2) {
+                        // 裡面一定要用 this
+                        // 若輸入的字 >=2 個字 push this 進 newitem
+                        this.items.push({ name: this.newitem, done: false })
+                        // push 後清空舊的資料 方便 push 新的資料
+                        this.newitem = ''
+                    }
+                },
+                del(index) {
+                    this.items.splice(index, 1)
+                },
+                delAll(index) {
+                    this.items.splice(index, items.length)
+                }
+            },
+            computed: {
+                inputBorder() {
+                    if (this.newitem.length) {
+
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
