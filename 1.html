@@ -49,6 +49,12 @@
 
     <input type="text" v-model="input.text"> {{ input.text }}
     <br>
+    <!--
+      .number 可將欄位資料型態轉為數字
+      .trim 可以自動執行 .trim()
+    -->
+    <input type="text" v-model.number="input.number"> {{ input.number }}
+    <br>
     <input type="checkbox" v-model="input.check" value="1"> 1
     <input type="checkbox" v-model="input.check" value="2"> 2
     <input type="checkbox" v-model="input.check" value="3"> 3
@@ -109,7 +115,8 @@
             check2: [],
             radio: '購買',
             select: '',
-            select2: ''
+            select2: '',
+            number: 0
           }
         }
       },
