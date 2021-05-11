@@ -21,6 +21,11 @@
     <h1 v-else>數字是其他</h1>
     <!-- v-show 不符合條件時 display none -->
     <h1 v-show="myNumber === 1">數字是 1</h1>
+
+    <ul>
+      <!-- v-for="(值, 索引) in 陣列" -->
+      <li v-for="(fruit, index) in fruits">{{ fruit }}</li>
+    </ul>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
@@ -31,7 +36,8 @@
         return {
           myText: 'Hi',
           myHTMLText: '<a href="https://fb.com">FB</a>',
-          myNumber: 1
+          myNumber: 1,
+          fruits: ['香蕉', '鳳梨', '蘋果', '芭樂']
         }
       }
     })
