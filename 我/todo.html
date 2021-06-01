@@ -10,13 +10,18 @@
 
 
 <body>
+    <!-- 引用 VUE -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    <!-- VUE 作用的範圍 -->
     <div id="app">
         <h1 ref="title" id="title">清單</h1>
+        <!-- 使用者輸入欄位 值就是 newitem 按 enter 可以執行 funtion add -->
         <input type="text" v-model="newitem" @keydown.enter="add" :style="{border: inputBorder}">
+        <!-- 點擊新增按鈕 執行 fuction add -->
         <input type="button" value="新增" @click="add">
         <ul>
+            <!-- 迴圈跑矩陣 items 取出每筆資資料為 item  -->
             <li v-for="(item, index) in items">
                 <!-- 選取後值是 item.done -->
                 <input type="checkbox" v-model="item.done">
@@ -35,7 +40,10 @@
             el: '#app',
             data() {
                 return {
+                    // 使用者輸入值後該筆資料 push 進陣列 items
                     items: [],
+
+                    // 使用者輸入的值
                     newitem: ''
                 }
             },
@@ -46,12 +54,14 @@
                     if (this.newitem.length >= 2) {
                         // 裡面一定要用 this
                         // 若輸入的字 >=2 個字 push this 進 newitem
+                        // data(){} 以外的地方要呼叫 data(){} 裡面的資料要用 this.data(){} 裡面的資料
                         this.items.push({ name: this.newitem, done: false })
                         // push 後清空舊的資料 方便 push 新的資料
                         this.newitem = ''
                     }
                 },
                 del(index) {
+                    // 刪除陣列裡的索引 從該索引開始刪掉一個索引
                     this.items.splice(index, 1)
                 }
             },
@@ -62,14 +72,21 @@
                 // inputBorder 同時是 function 也是 變數的名稱
                 // 根據使用者輸入的字數改變框線顏色
                 inputBorder() {
+                    // 先設 color 為空字串
                     let color = ''
+                    // 若使用者輸入的字數 =0 是黑色
                     if (this.newitem.length === 0) {
                         color = 'black'
+
+                        // 若使用者輸入的字數 <2 是紅色
                     } else if (this.newitem.length < 2) {
                         color = 'red'
+
+                        // 若使用者輸入的字數 >=2 是綠色
                     } else if (this.newitem.length >= 2) {
                         color = 'green'
                     }
+                    // 回傳結果 5px solid + 上面判斷式的 color
                     return '5px solid ' + color
                 }
             },
